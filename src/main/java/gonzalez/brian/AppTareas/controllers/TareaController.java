@@ -1,0 +1,51 @@
+package gonzalez.brian.AppTareas.controllers;
+
+import java.time.LocalDate;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import gonzalez.brian.AppTareas.services.TareaService;
+
+@Controller
+@RequestMapping(path = "/")
+public class TareaController {
+
+    TareaService tareasService = new TareaService();
+
+    /**
+     * Permite mostrar todas las tareas creadas al usuario,
+     * así como el formulario para agregar una nueva tarea
+     *
+     * @param model
+     * @return nombre de template
+     */
+    @GetMapping(path = "/")
+    public String tareas(Model model) {
+        model.addAttribute("tareas", tareasService.getTareas());
+
+        return "crearTareas";
+    }
+
+    /**
+     * Permite agregar una nueva tarea a la lista de tareas y luego redireccionar a la página principal
+     *
+     * @param titulo      titulo de la tarea
+     * @param descripcion descripcion de la tarea
+     * @param mesLimite   mes limite de la tarea
+     * @param diaLimite   día limite de la tarea
+     * @return
+     */
+    @PostMapping(path = "/create")
+    public String crearTarea(@RequestParam String titulo, @RequestParam String descripcion,
+                             @RequestParam int mesLimite, @RequestParam int diaLimite) {
+
+        tareasService.crearTarea(titulo, descripcion, LocalDate.of(2023, mesLimite, diaLimite));
+
+        return "redirect:/";
+    }
+}
