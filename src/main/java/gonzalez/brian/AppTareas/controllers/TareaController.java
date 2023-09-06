@@ -1,6 +1,8 @@
 package gonzalez.brian.AppTareas.controllers;
 
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,10 +44,16 @@ public class TareaController {
      */
     @PostMapping(path = "/create")
     public String crearTarea(@RequestParam String titulo, @RequestParam String descripcion,
-                             @RequestParam int mesLimite, @RequestParam int diaLimite) {
+                             @RequestParam int mesLimite, @RequestParam int diaLimite, Model model) {
 
-        tareasService.crearTarea(titulo, descripcion, LocalDate.of(2023, mesLimite, diaLimite));
-
-        return "redirect:/";
+        try {
+            tareasService.crearTarea(titulo, descripcion, LocalDate.of(2023, mesLimite, diaLimite));
+            model.addAttribute("exito", "Se ha creado la tarea");
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("tareas", tareasService.getTareas());
+            return "crearTareas";
+        }
     }
 }
