@@ -58,7 +58,10 @@ public class TareaController {
     @GetMapping("/mostrar/{titulo}")
     public String mostrar(@PathVariable String titulo, Model model) {
         Tarea tarea = tareasService.buscarTareaPorTitulo(titulo);
+        String fechaFormateada = tareasService.formatearFecha(tarea.getFechaLimite());
 
+
+        model.addAttribute("fecha", fechaFormateada);
         model.addAttribute("tarea", tarea);
 
         return "mostrarTarea";

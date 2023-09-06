@@ -1,6 +1,7 @@
 package gonzalez.brian.AppTareas.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import gonzalez.brian.AppTareas.entity.Tarea;
@@ -44,6 +45,7 @@ public class TareaService {
 
     /**
      * Permite buscara una determinada tarea, en el listado de tarea disponibles
+     *
      * @param titulo titulo de la tarea a buscar
      * @return
      */
@@ -58,6 +60,13 @@ public class TareaService {
         }
 
         return tareaEncontrada;
+    }
+
+    public String formatearFecha(LocalDate fecha) {
+        String formato = "dd/MM/yyyy";
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(formato);
+
+        return dateFormatter.format(fecha);
     }
 
     // Getters and setters
