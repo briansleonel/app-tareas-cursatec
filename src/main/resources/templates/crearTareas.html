@@ -66,6 +66,8 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${tarea.titulo}"></h5>
                     <p class="card-text" th:text="${tarea.descripcion}"></p>
+                    <a th:href="@{/mostrar/__${tarea.titulo}__}">Mostrar Tarea</a>
+                    <a th:href="@{/mostrar/{titulo}(titulo=${tarea.titulo})}">Mostrar Tarea</a>
                 </div>
                 <div class="card-footer">
                     <div>

@@ -4,12 +4,10 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import gonzalez.brian.AppTareas.entity.Tarea;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import gonzalez.brian.AppTareas.services.TareaService;
 
@@ -55,5 +53,14 @@ public class TareaController {
             model.addAttribute("tareas", tareasService.getTareas());
             return "crearTareas";
         }
+    }
+
+    @GetMapping("/mostrar/{titulo}")
+    public String mostrar(@PathVariable String titulo, Model model) {
+        Tarea tarea = tareasService.buscarTareaPorTitulo(titulo);
+
+        model.addAttribute("tarea", tarea);
+
+        return "mostrarTarea";
     }
 }

@@ -42,6 +42,24 @@ public class TareaService {
         tareas.add(tarea);
     }
 
+    /**
+     * Permite buscara una determinada tarea, en el listado de tarea disponibles
+     * @param titulo titulo de la tarea a buscar
+     * @return
+     */
+    public Tarea buscarTareaPorTitulo(String titulo) {
+        Tarea tareaEncontrada = null;
+
+        for (Tarea tarea : tareas) {
+            if (tarea.getTitulo().equalsIgnoreCase(titulo)) {
+                tareaEncontrada = tarea;
+                break;
+            }
+        }
+
+        return tareaEncontrada;
+    }
+
     // Getters and setters
 
     /**
