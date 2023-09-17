@@ -3,6 +3,8 @@ package gonzalez.brian.AppTareas.controllers;
 import java.time.LocalDate;
 
 import gonzalez.brian.AppTareas.entity.Tarea;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,8 @@ import gonzalez.brian.AppTareas.services.TareaService;
 @RequestMapping(path = "/")
 public class TareaController {
 
-    TareaService tareasService = new TareaService();
+	@Autowired
+    TareaService tareasService;
 
     /**
      * Permite mostrar todas las tareas creadas al usuario,
@@ -24,7 +27,7 @@ public class TareaController {
      */
     @GetMapping(path = "/")
     public String tareas(Model model) {
-        model.addAttribute("tareas", tareasService.getTareas());
+        model.addAttribute("tareas", tareasService.buscarTareas());
 
         return "crearTareas";
     }
@@ -48,14 +51,14 @@ public class TareaController {
             return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("tareas", tareasService.getTareas());
+            model.addAttribute("tareas", tareasService.buscarTareas());
             return "crearTareas";
         }
     }
 
-    @GetMapping("/mostrar/{titulo}")
-    public String mostrar(@PathVariable String titulo, Model model) {
-        Tarea tarea = tareasService.buscarTareaPorTitulo(titulo);
+    @GetMapping("/mostrar/{id}")
+    public String mostrar(@PathVariable Integer id, Model model) {
+        Tarea tarea = tareasService.buscarTareaPorID(id);
         String fechaFormateada = tareasService.formatearFecha(tarea.getFechaLimite());
 
 
@@ -63,5 +66,25 @@ public class TareaController {
         model.addAttribute("tarea", tarea);
 
         return "mostrarTarea";
+    }
+    
+    @GetMapping("/modificar/{id}")
+    public String modificarTarea(@PathVariable Integer id, Model model) {
+    	Tarea tarea = tareasService.buscarTareaPorID(id);
+    	model.addAttribute("tarea", tarea);
+    	
+        return "modificarTarea";
+    }
+    
+    @PostMapping("/completar/{id}")
+    public String completarTarea(@PathVariable Integer id, Model model) {
+
+        return "";
+    }
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminarTarea(@PathVariable Integer id, Model model) {
+
+        return "";
     }
 }
