@@ -70,6 +70,28 @@ public class TareaService {
 		return tareaEncontrada;
 	}
 
+	@Transactional
+	public void modificarTarea(Integer id, String titulo, String descripcion, LocalDate fechaLimite) throws Exception {
+		// Validando título
+		if (titulo.isEmpty()) {
+			throw new Exception("Debe ingresar un título");
+		} else if (titulo.length() <= 5) {
+			throw new Exception("El título debe tener más de 5 caracteres");
+		}
+
+		// Validando la descripción
+		if (titulo.isEmpty()) {
+			throw new Exception("Debe ingresar una descripción");
+		}
+
+		Tarea tarea = buscarTareaPorID(id);
+		tarea.setTitulo(titulo);
+		tarea.setDescripcion(descripcion);
+		tarea.setFechaLimite(fechaLimite);
+
+		tareaRepository.save(tarea);
+	}
+
 	public String formatearFecha(LocalDate fecha) {
 		String formato = "dd/MM/yyyy";
 		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(formato);
