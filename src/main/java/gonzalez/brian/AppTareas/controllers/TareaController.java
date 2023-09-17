@@ -1,8 +1,6 @@
 package gonzalez.brian.AppTareas.controllers;
 
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import gonzalez.brian.AppTareas.entity.Tarea;
 import org.springframework.stereotype.Controller;
